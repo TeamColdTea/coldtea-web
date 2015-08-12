@@ -17,7 +17,7 @@
     var img = document.createElement('img');
 
     $(img).on('load', function () {
-      $('snapshots').prepend(img);
+      $('#snapshots').prepend(img);
     });
     img.src = snapshot.toDataURL('image/png');
   });
