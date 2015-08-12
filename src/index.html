@@ -6,12 +6,17 @@
 </head>
 <body>
   <div id="container-element"></div>
-  <button onclick="snapshot()">Take A Shot!</button>
+  <button id="snapshot">Take A Shot!</button>
 </body>
+  <!-- build:js js/vendor.js -->
   <!-- bower:js -->
   <script src="../bower_components/jquery/dist/jquery.js"></script>
   <script src="../bower_components/say-cheese/say-cheese.js"></script>
   <!-- endbower -->
+  <!-- endbuild -->
+
+  <!-- build:appjs js/app.js -->
   <script src="webcam.js"></script>
+  <!-- endbuild -->
 </html>
 

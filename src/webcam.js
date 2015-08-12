@@ -1,6 +1,6 @@
-'use strict';
-
 (function () {
+  'use strict';
+
   var sayCheese = new SayCheese('#container-element', { snapshots: true });
 
   sayCheese.on('start', function () {
@@ -24,8 +24,9 @@
 
   sayCheese.start();
 
-  function snapshot() {
-    sayCheese.takeSnapShot();
-  }
-  
-} ());
+  $('#snapshot').click(function() {
+    console.log('take a photo');
+    sayCheese.takeSnapshot();
+  });
+
+})();

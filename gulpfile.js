@@ -5,11 +5,22 @@ var plugins = require('gulp-load-plugins')();
 gulp.task('wiredep', function() {
   gulp.src('src/index.html')
   .pipe(wiredep())
-  .pipe(gulp.dest('src'));  
+  .pipe(gulp.dest('src'));
 });
 
-gulp.task('serve', ['wiredep'], function() {
-  gulp.src('src')
+gulp.task('usemin', function() {
+  return gulp.src('src/index.html')
+  .pipe(plugins.usemin({
+    // css: [plugins.minifyCss(), 'concat'],
+    html: [plugins.minifyHtml({empty: true})],
+    js: [plugins.uglify(), plugins.rev()],
+    appjs: [plugins.uglify()],
+  }))
+  .pipe(gulp.dest('dist/'));
+});
+
+gulp.task('serve', ['build'], function() {
+  gulp.src('dist')
   .pipe(plugins.webserver({
     host: 'localhost',
     port: 8080,
@@ -18,5 +29,7 @@ gulp.task('serve', ['wiredep'], function() {
   }));
 });
 
-gulp.task('default', ['wiredep'], function() {
+gulp.task('build', ['wiredep', 'usemin']);
+
+gulp.task('default', ['build'], function() {
 });
