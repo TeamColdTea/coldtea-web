@@ -3,9 +3,19 @@ var wiredep = require('wiredep').stream;
 var plugins = require('gulp-load-plugins')();
 
 gulp.task('wiredep', function () {
-  gulp.src('src/index.html')
+  return gulp.src('src/index.html')
     .pipe(wiredep())
     .pipe(gulp.dest('src'));
+});
+
+gulp.task('clean:dist', function () {
+  return gulp.src('dist')
+    .pipe(plugins.clean());
+});
+
+gulp.task('clean:publish', function () {
+  return gulp.src('.publish')
+    .pipe(plugins.clean());
 });
 
 gulp.task('usemin', function () {
@@ -19,11 +29,17 @@ gulp.task('usemin', function () {
     .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('build', ['wiredep', 'usemin']);
+gulp.task('ghPages', function () {
+  return gulp.src('./dist/**/*')
+    .pipe(plugins.ghPages());
+});
 
-gulp.task('deploy', ['build'], function () {
-  gulp.src('./dist/**/*')
-  .pipe(plugins.ghPages());
+gulp.task('build', function (cb) {
+  plugins.sequence('clean:dist', 'wiredep', 'usemin', cb);
+});
+
+gulp.task('deploy', function (cb) {
+  plugins.sequence('clean:publish', 'build', 'ghPages', cb);
 });
 
 gulp.task('serve', ['build'], function () {
