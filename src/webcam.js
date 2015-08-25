@@ -2,7 +2,7 @@
   'use strict';
 
   var url = {
-    'uploadImageUrl': 'http://uploadimage-coldtea.chinacloudsites.cn/uploadimage',
+    'uploadImageUrl': 'http://coldtea-img.herokuapp.com/uploadimage',
     'uploadImageUrlLocal': 'http://localhost:3000/uploadimage',
     'imageBaseUrl': 'https://imageuploaded4coldtea.blob.core.windows.net/fromweb'
   };
