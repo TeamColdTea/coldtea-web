@@ -1,6 +1,10 @@
 (function () {
   'use strict';
 
+  var url = {
+    'uploadimage': 'http://uploadimage-coldtea.chinacloudsites.cn/uploadimage'
+  };
+
   var sayCheese = new SayCheese('#container-element', { snapshots: true });
 
   sayCheese.on('start', function () {
@@ -20,6 +24,10 @@
       $('#snapshots').prepend(img);
     });
     img.src = snapshot.toDataURL('image/png');
+
+    $.post(url.uploadimage, {base64str: img.src}, function (data) {
+      console.log(data);
+    });
   });
 
   sayCheese.start();
