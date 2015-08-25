@@ -2,7 +2,9 @@
   'use strict';
 
   var url = {
-    'uploadimage': 'http://uploadimage-coldtea.chinacloudsites.cn/uploadimage'
+    'uploadImageUrl': 'http://uploadimage-coldtea.chinacloudsites.cn/uploadimage',
+    'uploadImageUrlLocal': 'http://localhost:3000/uploadimage',
+    'imageBaseUrl': 'https://imageuploaded4coldtea.blob.core.windows.net/fromweb'
   };
 
   var sayCheese = new SayCheese('#container-element', { snapshots: true });
@@ -23,18 +25,34 @@
     $(img).on('load', function () {
       $('#snapshots').prepend(img);
     });
-    img.src = snapshot.toDataURL('image/png');
 
-    $.post(url.uploadimage, {base64str: img.src}, function (data) {
+    img.src = snapshot.toDataURL('image/jpeg', 0.2);
+
+    var imgData = {
+      base64str: img.src,
+      name: makeid() + '.jpg'
+    };
+
+    $.post(url.uploadImageUrl, imgData, function (data) {
       console.log(data);
+      console.log(url.imageBaseUrl + '/' + imgData.name);
     });
   });
 
   sayCheese.start();
 
-  $('#snapshot').click(function() {
+  $('#snapshot').click(function () {
     console.log('take a photo');
     sayCheese.takeSnapshot();
   });
 
+  function makeid() {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (var i = 0; i < 5; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+  }
 })();
