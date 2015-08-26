@@ -21,10 +21,10 @@ gulp.task('clean:publish', function () {
 gulp.task('usemin', function () {
   return gulp.src('src/index.html')
     .pipe(plugins.usemin({
-      // css: [plugins.minifyCss(), 'concat'],
+      css: [plugins.minifyCss(), 'concat'],
       html: [plugins.minifyHtml({ empty: true })],
       js: [plugins.uglify(), plugins.rev()],
-      appjs: [plugins.uglify()],
+      appjs: [plugins.uglify(), plugins.rev()],
     }))
     .pipe(gulp.dest('dist/'));
 });
